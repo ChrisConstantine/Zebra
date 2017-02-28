@@ -45,7 +45,7 @@ class Parser
 				assert(!s.fail());
 				s >> tmp;
 				assert(tmp == "Radius");
-				double r;
+				Float r;
 				s >> r;
 				assert(!s.fail());
 				s >> tmp;

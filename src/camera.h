@@ -17,9 +17,9 @@ class Camera
 	public:
 		Camera(int x = 512, int y = 384):x_(x), y_(y) { }
 
-		Vector RasterToWorld(double x, double y) const {
-			static const double cx = double(x_) * 0.5135 / y_;
-			static const double cy = 0.5135;
+		Vector RasterToWorld(Float x, Float y) const {
+			static const Float cx = Float(x_) * 0.5135 / y_;
+			static const Float cy = 0.5135;
 			return Normalize(Vector(cx * ((x / x_) - 0.5),
                               cy * (0.5 - (y / y_)),
                               1));

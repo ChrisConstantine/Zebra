@@ -19,9 +19,9 @@ namespace Zebra {
 class RNG
 {
 	public:
-		RNG():generator_(time(0)), distribution_(0, 1) { }
+		RNG():generator_(1234), distribution_(0, 1) { }
 
-		double Get1() {
+		Float Get1() {
 			return distribution_(generator_);
 		}
 
@@ -31,7 +31,7 @@ class RNG
 
 	private:
 		std::default_random_engine generator_;
-		std::uniform_real_distribution<double> distribution_;
+		std::uniform_real_distribution<Float> distribution_;
 };
 
 } // namespace Zebra

@@ -1,7 +1,7 @@
 /**
  *    > Author:            UncP
  *    > Mail:         770778010@qq.com
- *    > Github:    https://www.github.com/UncP/Elephant
+ *    > Github:    https://www.github.com/UncP/Zebra
  *    > Created Time:  2016-12-31 22:52:11
 **/
 
@@ -10,22 +10,24 @@
 
 #include <cmath>
 
+#include "util.h"
+
 namespace Zebra {
 
 class Vector2
 {
 	public:
-		Vector2(double x, double y):x_(x), y_(y) { }
+		Vector2(Float x, Float y):x_(x), y_(y) { }
 
-		double x_, y_;
+		Float x_, y_;
 };
 
 class Vector
 {
 	public:
 		Vector():x_(0), y_(0), z_(0) { }
-		Vector(double v):x_(v), y_(v), z_(v) { }
-		Vector(double x, double y, double z):x_(x), y_(y), z_(z) { }
+		Vector(Float v):x_(v), y_(v), z_(v) { }
+		Vector(Float x, Float y, Float z):x_(x), y_(y), z_(z) { }
 		Vector(const Vector &) = default;
 
 		Vector operator+(const Vector &that) const {
@@ -55,38 +57,33 @@ class Vector
 			z_ *= that.z_;
 			return *this;
 		}
-		Vector operator*(double v) const {
+		Vector operator*(Float v) const {
 			return Vector(x_ * v, y_ * v, z_ * v);
 		}
-		Vector& operator*=(double v) {
+		Vector& operator*=(Float v) {
 			x_ *= v;
 			y_ *= v;
 			z_ *= v;
 			return *this;
 		}
 
-		Vector operator/(double v) const {
+		Vector operator/(Float v) const {
 			return *this * (1.0 / v);
 		}
-		Vector operator/=(double v) {
+		Vector operator/=(Float v) {
 			return *this *= (1.0 / v);
 		}
 
 		Vector operator-() const { return Vector(-x_, -y_, -z_); }
 
-		double Length2() const {
+		Float Length2() const {
 			return x_ * x_ + y_ * y_ + z_ * z_;
 		}
-		double Length() const {
-			return std::sqrt(x_ * x_ + y_ * y_ + z_ * z_);
-		}
-		void Clamp() {
-			x_ = std::min(1.0, std::max(0.0, x_));
-			y_ = std::min(1.0, std::max(0.0, y_));
-			z_ = std::min(1.0, std::max(0.0, z_));
+		Float Length() const {
+			return Sqrt(x_ * x_ + y_ * y_ + z_ * z_);
 		}
 
-		double x_, y_, z_;
+		Float x_, y_, z_;
 };
 
 typedef Vector Point;
@@ -102,7 +99,7 @@ inline Vector Cross(const Vector &lhs, const Vector &rhs) {
 	);
 }
 
-inline double Dot(const Vector &lhs, const Vector &rhs) {
+inline Float Dot(const Vector &lhs, const Vector &rhs) {
 	return lhs.x_ * rhs.x_ + lhs.y_ * rhs.y_ + lhs.z_ * rhs.z_;
 }
 

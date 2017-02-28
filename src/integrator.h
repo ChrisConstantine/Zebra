@@ -83,7 +83,7 @@ class Integrator
       for (int y = 0; y < camera_.y_; ++y) {
         for (int x = 0; x < camera_.x_; ++x) {
           Vector &rgb = pixels_[x + (camera_.y_ - y - 1) * camera_.x_];
-          double tmp[3];
+          Float tmp[3];
           // tmp[0] = std::pow(rgb.z_, 1.0/2.2) * 255 + 0.5;
           // tmp[1] = std::pow(rgb.y_, 1.0/2.2) * 255 + 0.5;
           // tmp[2] = std::pow(rgb.x_, 1.0/2.2) * 255 + 0.5;
@@ -92,9 +92,9 @@ class Integrator
           tmp[2] = rgb.x_ * 255 + 0.5;
 
           byte clr[3];
-          clr[0] = byte(std::min(255.0, std::max(0.0, tmp[0])));
-          clr[1] = byte(std::min(255.0, std::max(0.0, tmp[1])));
-          clr[2] = byte(std::min(255.0, std::max(0.0, tmp[2])));
+          clr[0] = byte(std::min(Float(255), std::max(Float(0), tmp[0])));
+          clr[1] = byte(std::min(Float(255), std::max(Float(0), tmp[1])));
+          clr[2] = byte(std::min(Float(255), std::max(Float(0), tmp[2])));
 
           bmp.write((char *)&clr, sizeof(clr));
         }

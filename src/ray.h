@@ -15,11 +15,11 @@ namespace Zebra {
 class Ray
 {
 	public:
-		Ray(const Point &o, const Vector &d, double m = 1e10):o_(o), d_(d), m_(m) { }
+		Ray(const Point &o, const Vector &d, Float m = INF):o_(o), d_(d), m_(m) { }
 
 		Point  o_;
 		Vector d_;
-		double m_;
+		Float  m_;
 };
 
 } // namespace Zebra
