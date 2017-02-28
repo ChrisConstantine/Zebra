@@ -10,6 +10,7 @@
 
 #include "vector.h"
 #include "ray.h"
+#include "rng.h"
 #include "interaction.h"
 
 namespace Zebra {
@@ -29,7 +30,7 @@ class Object
 		virtual bool IntersectP(const Ray &r) const = 0;
 		virtual ~Object() { }
 
-		Vector SampleF(const Vector &d, const Vector &n, const Vector2 &u) const {
+		Vector SampleF(const Vector &d, const Vector &n, RNG &rng) const {
 			switch (t_) {
 				case Diffuse: {
 					Vector x, y, z(n);
@@ -39,6 +40,7 @@ class Object
 						x = Normalize(Cross(Vector(1, 0, 0), z));
 					y = Cross(z, x);
 
+					auto u = rng.Get2();
 					Float m = Sqrt(u.x_);
 					Float phi = 2 * PI * u.y_;
 
@@ -71,7 +73,7 @@ class Object
 					Float parl = (term2 - term1) / (term2 + term1);
 					Float perp = (term3 - term4) / (term3 + term4);
 					Float re = (parl * parl + perp * perp) * 0.5;
-					if (u.x_ < re)
+					if (rng.Get1() < re)
 						return Normalize(d - n * (2 * Dot(n, d)));
 					else
 						return Normalize(d * eta - n * ((entering ? 1 : -1) * ((eta * cosi) + cost)));

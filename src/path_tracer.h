@@ -30,7 +30,7 @@ class PathTracer : public Integrator
 			#pragma omp parallel for schedule(dynamic, 1) private(L)
 			for (int y = 0; y < Y; ++y) {
 				fprintf(stderr, "\rprogress: %.1f%%", (Float)y / (Y - 1) * 100);
-				for (int x = 0; x < X; ++x) {
+					for (int x = 0; x < X; ++x) {
 					for (int sx = 0; sx < 2; ++sx) {
 						for (int sy = 0; sy < 2; ++sy, L = Spectrum()) {
 							for (int n = 0; n < samples_; ++n) {
@@ -95,7 +95,7 @@ class PathTracer : public Integrator
 
 				weight *= f;
 
-				Vector nd = interaction.o_->SampleF(ray.d_, interaction.n_, rng_.Get2());
+				Vector nd = interaction.o_->SampleF(ray.d_, interaction.n_, rng_);
 
 				ray.m_ = INF;
 				ray.o_ = interaction.p_ + nd * kEplison;

@@ -82,7 +82,7 @@ class Integrator
 
       for (int y = 0; y < camera_.y_; ++y) {
         for (int x = 0; x < camera_.x_; ++x) {
-          Vector &rgb = pixels_[x + (camera_.y_ - y - 1) * camera_.x_];
+          Vector &rgb = pixels_[camera_.x_ - x - 1 + y * camera_.x_];
           Float tmp[3];
           // tmp[0] = std::pow(rgb.z_, 1.0/2.2) * 255 + 0.5;
           // tmp[1] = std::pow(rgb.y_, 1.0/2.2) * 255 + 0.5;

@@ -9,26 +9,35 @@
 #define _CAMERA_H_
 
 #include "vector.h"
+#include "matrix.h"
 
 namespace Zebra {
 
 class Camera
 {
 	public:
-		Camera(int x = 512, int y = 384):x_(x), y_(y) { }
+		Camera(int x = 512, int y = 384):x_(x), y_(y) {
+			auto raster_to_screen = Scale(Float(x_)/y_*0.5135, -0.5135, 1) *
+			                        Transform(-.5, -.5, 0) *
+			                        Scale(1./x_, 1./y_, 1);
+			auto perspective  = Perspective(0.5135, 1, 10000);
+
+			raster_to_world_ = Inverse(perspective) * raster_to_screen;
+			world_to_raster_ = Inverse(raster_to_world_);
+		}
 
 		Vector RasterToWorld(Float x, Float y) const {
-			static const Float cx = Float(x_) * 0.5135 / y_;
-			static const Float cy = 0.5135;
-			return Normalize(Vector(cx * ((x / x_) - 0.5),
-                              cy * (0.5 - (y / y_)),
-                              1));
+			return Normalize(raster_to_world_.TransformPoint(Point(x, y, 0)));
 		}
 
 		int RasterToIndex(int x, int y) const { return y * x_ + x; }
 
 		const int x_;
 		const int y_;
+
+	private:
+		Matrix world_to_raster_;
+		Matrix raster_to_world_;
 };
 
 } // namespace Zebra
